@@ -21,8 +21,8 @@ namespace QuickTestDI {
 
             dbContext.Database.EnsureCreated();
 
-            Data = dbContext.AnatolioSettings.Any()
-                ? dbContext.AnatolioSettings.ToDictionary(c => c.Key, c => c.Value)
+            Data = dbContext.DemoSettings.Any()
+                ? dbContext.DemoSettings.ToDictionary(c => c.Key, c => c.Value)
                 : CreateAndSaveDefaultValues(dbContext);
         }
 
@@ -30,20 +30,20 @@ namespace QuickTestDI {
             EntityConfigurationContext context) {
             var settings = new Dictionary<string, string>(
                 StringComparer.OrdinalIgnoreCase) {
-                ["AnatolioOptions:Global:Enabled"] = "true",
-                ["AnatolioOptions:Global:AutoRetryDelay"] = "12:58:00",
-                ["AnatolioOptions:Global:IdentityOptions:MaxUserNameLength"] = "5"
+                ["DemoOptions:Global:Enabled"] = "true",
+                ["DemoOptions:Global:AutoRetryDelay"] = "12:58:00",
+                ["DemoOptions:Global:IdentityOptions:MaxUserNameLength"] = "5"
             };
 
-            context.AnatolioSettings.AddRange(
+            context.DemoSettings.AddRange(
                 settings.Select(kvp => new DemoSettings(kvp.Key, kvp.Value))
                         .ToArray());
 
             var tenant1settings = new Dictionary<string, string>(
                 StringComparer.OrdinalIgnoreCase) {
-                ["AnatolioOptions:Tenant:Enabled"] = "true",
-                ["AnatolioOptions:Tenant:AutoRetryDelay"] = "12:58:00",
-                ["AnatolioOptions:Tenant:IdentityOptions:MaxUserNameLength"] = "5"
+                ["DemoOptions:Tenant:Enabled"] = "true",
+                ["DemoOptions:Tenant:AutoRetryDelay"] = "12:58:00",
+                ["DemoOptions:Tenant:IdentityOptions:MaxUserNameLength"] = "5"
             };
 
 
@@ -53,9 +53,9 @@ namespace QuickTestDI {
 
             var tenant2settings = new Dictionary<string, string>(
                 StringComparer.OrdinalIgnoreCase) {
-                ["AnatolioOptions:Tenant:Enabled"] = "true",
-                ["AnatolioOptions:Tenant:AutoRetryDelay"] = "12:58:00",
-                ["AnatolioOptions:Tenant:IdentityOptions:MaxUserNameLength"] = "5"
+                ["DemoOptions:Tenant:Enabled"] = "true",
+                ["DemoOptions:Tenant:AutoRetryDelay"] = "12:58:00",
+                ["DemoOptions:Tenant:IdentityOptions:MaxUserNameLength"] = "5"
             };
 
 
