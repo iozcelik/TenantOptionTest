@@ -1,0 +1,10 @@
+﻿@Model DemoOptions
+
+@{
+    ViewData["Title"] = "OptionInfo";
+}
+<h1>@ViewData["Title"]</h1>
+
+<p>Enabled: @Model.Enabled</p>
+<p>AutoRetryDelay: @Model.AutoRetryDelay</p>
+<p>MaxUserNameLength: @Model.IdentityOptions?.MaxUserNameLength</p>

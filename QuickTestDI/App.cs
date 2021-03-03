@@ -1,19 +1,25 @@
-﻿using Microsoft.Extensions.Options;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 using System;
+using System.Threading;
 
 namespace QuickTestDI {
     public class App {
-        private readonly IOptionsSnapshot<DemoOptions> _options;
+        private readonly IOptionsManager<DemoOptions> _options;
+        private readonly IConfiguration _configuration;
+        private readonly ITenantService _tenantService;
 
-        public App(IOptionsSnapshot<DemoOptions> options) {
+        public App(IOptionsManager<DemoOptions> options, IConfiguration configuration, ITenantService tenantService) {
             _options = options;
+            _configuration = configuration;
+            _tenantService = tenantService;
         }
 
         public void Run() {
-            Console.WriteLine("Hello from App.cs");
-            Console.WriteLine($"DemoOptions:Global:Enabled={_options.Value.Enabled}");
-            Console.WriteLine($"DemoOptions:Global:AutoRetryDelay={_options.Value.AutoRetryDelay}");
-            Console.WriteLine($"DemoOptions:Global:IdentityOptions:MaxUserNameLength={_options.Value.IdentityOptions.MaxUserNameLength}");
+            Console.WriteLine($"Current Thread:{Thread.CurrentThread.Name} Current Tenant:{_tenantService.Id}");
+            Console.WriteLine($"Enabled={_options.Value.Enabled}");
+            Console.WriteLine($"AutoRetryDelay={_options.Value.AutoRetryDelay}");
+            Console.WriteLine($"IdentityOptions:MaxUserNameLength={_options.Value.IdentityOptions.MaxUserNameLength}");
         }
     }
 }
