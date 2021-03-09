@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.Collections.Generic;
 using System.Linq;
+using WebApplication.Controllers;
 
 namespace WebApplication {
     public class Startup {
@@ -33,11 +34,15 @@ namespace WebApplication {
             services.AddScoped<ITenantService, TenantService>();
             services.AddScoped<IOptionsManager<DemoOptions>, DemoOptionsManager>();
 
+            services.AddScoped(typeof(ITestManager<>), typeof(TestManager<>));
+
 
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
             services.AddHttpContextAccessor();
-            services.AddControllersWithViews();
+            services.AddControllersWithViews().ConfigureApplicationPartManager(p => p.FeatureProviders.Add(new GenericControllerFeatureProvider()));
         }
+
+
 
         public static IConfiguration LoadGlobalConfiguration(DemoDbContext context) {
             var builder = new ConfigurationBuilder();
